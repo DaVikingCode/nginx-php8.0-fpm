@@ -77,20 +77,20 @@ RUN docker-php-ext-configure \
     chown www-data:www-data /usr/sbin/crond && \
     setcap cap_setgid=ep /usr/sbin/crond
 
-COPY ./docker/config/php.ini $PHP_INI_DIR/conf.d/
+COPY ./config/php.ini $PHP_INI_DIR/conf.d/
 
 # Setup Crond and Supervisor by default
 RUN echo -e '*  *  *  *  * echo $(/usr/local/bin/php  /var/www/artisan schedule:run) > /proc/1/fd/1 2>&1' > /etc/crontabs/www-data && \
     chown www-data:www-data /etc/crontabs/www-data
 RUN mkdir /etc/supervisor.d
-COPY ./docker/config/master.ini /etc/supervisor.d/
-COPY ./docker/config/supervisord.conf /etc/
+COPY ./config/master.ini /etc/supervisor.d/
+COPY ./config/supervisord.conf /etc/
 
-COPY ./docker/config/default.conf /etc/nginx/conf.d
-COPY ./docker/config/nginx.conf /etc/nginx/
+COPY ./config/default.conf /etc/nginx/conf.d
+COPY ./config/nginx.conf /etc/nginx/
 
-COPY ./docker/config/www.conf /usr/local/etc/php-fpm.conf.d/www.conf
-COPY ./docker/config/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./config/www.conf /usr/local/etc/php-fpm.conf.d/www.conf
+COPY ./config/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 RUN chmod 755 -R /etc/supervisor.d/ /etc/supervisord.conf  /etc/nginx/ /etc/crontabs/
 
