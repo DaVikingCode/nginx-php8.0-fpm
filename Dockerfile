@@ -1,6 +1,6 @@
 FROM node:16.13-alpine as node
 
-FROM php:8.0.2-fpm-alpine3.13
+FROM php:8.0.2-fpm-alpine3.13 as base
 
 # Setup Working Dir
 WORKDIR /var/www
@@ -84,6 +84,7 @@ RUN docker-php-ext-configure \
 COPY ./config/php.ini $PHP_INI_DIR/conf.d/
 
 # Setup Crond and Supervisor by default
+# TODO : move that to project
 RUN echo -e '*  *  *  *  * echo $(/usr/local/bin/php  /var/www/artisan schedule:run) > /proc/1/fd/1 2>&1' > /etc/crontabs/www-data && \
     chown www-data:www-data /etc/crontabs/www-data
 RUN mkdir /etc/supervisor.d
@@ -110,7 +111,6 @@ RUN addgroup www-data tty
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-#RUN composer config -a bitbucket-oauth.bitbucket.org ${CONSUMER_KEY} ${CONSUMER_SECRET}
 
 # Install Node
 COPY --from=node /usr/lib /usr/lib
