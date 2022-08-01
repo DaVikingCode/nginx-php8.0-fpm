@@ -1,4 +1,6 @@
-FROM php:8.0.2-fpm-alpine3.12
+FROM node:16.13-alpine as node
+
+FROM php:8.0.2-fpm-alpine3.13 as base
 
 # Setup Working Dir
 WORKDIR /var/www
@@ -49,7 +51,7 @@ RUN apk add --update --no-cache \
     libzip-dev \
     less \
     imagemagick \
-    imagemagick-dev&& pecl install redis \
+    imagemagick-dev && pecl install redis \
     && pecl install -o -f imagick
 
 # Configure & Install Extension
@@ -103,6 +105,17 @@ RUN mkdir -p /var/lib/nginx/tmp /var/log/nginx \
 
 # Add non root user to the tty group, so we can write to stdout and stderr
 RUN addgroup www-data tty
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+#RUN composer config -a bitbucket-oauth.bitbucket.org ${CONSUMER_KEY} ${CONSUMER_SECRET}
+
+# Install Node
+COPY --from=node /usr/lib /usr/lib
+COPY --from=node /usr/local/share /usr/local/share
+COPY --from=node /usr/local/lib /usr/local/lib
+COPY --from=node /usr/local/include /usr/local/include
+COPY --from=node /usr/local/bin /usr/local/bin
 
 USER www-data
 
