@@ -1,6 +1,6 @@
 FROM node:16.13-alpine as node
 
-FROM php:8.0.2-fpm-alpine3.13 as base
+FROM php:8.0.2-fpm-alpine3.13
 
 # Setup Working Dir
 WORKDIR /var/www
@@ -36,6 +36,8 @@ RUN apk update && apk add --no-cache --virtual .build-deps  \
 
 # Add Production Dependencies
 RUN apk add --update --no-cache \
+    git \
+    openssh \
     pcre-dev ${PHPIZE_DEPS} \
     jpegoptim \
     pngquant \
