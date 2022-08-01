@@ -83,11 +83,7 @@ RUN docker-php-ext-configure \
 
 COPY ./config/php.ini $PHP_INI_DIR/conf.d/
 
-# Setup Crond and Supervisor by default
-# TODO : move that to project
-#RUN echo -e '*  *  *  *  * echo $(/usr/local/bin/php  /var/www/artisan schedule:run) > /proc/1/fd/1 2>&1' > /etc/crontabs/www-data && \
-#    chown www-data:www-data /etc/crontabs/www-data
-
+# Setup config for supervisor nginx php-fpm crontabs
 RUN mkdir /etc/supervisor.d
 COPY ./config/master.ini /etc/supervisor.d/
 COPY ./config/supervisord.conf /etc/
