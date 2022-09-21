@@ -93,6 +93,7 @@ COPY ./config/nginx.conf /etc/nginx/
 
 COPY ./config/www.conf /usr/local/etc/php-fpm.conf.d/www.conf
 COPY ./config/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./config/docker.conf /usr/local/etc/php-fpm.d/docker.conf
 
 RUN chmod 755 -R /etc/supervisor.d/ /etc/supervisord.conf  /etc/nginx/ /etc/crontabs/
 
