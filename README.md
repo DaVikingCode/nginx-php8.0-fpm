@@ -3,7 +3,8 @@
 This is a base image using nginx + php fpm monitored by supervisord.
 
 - PHP 8.0
-- Postgresql driver
+- PostgreSQL driver
+- MySQL driver
 - Imagick extension
 - supervisor
 - Composer

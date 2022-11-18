@@ -64,7 +64,10 @@ RUN docker-php-ext-configure \
     docker-php-ext-configure zip && \
     docker-php-ext-install \
     opcache \
+    mysqli \
     pgsql \
+    pdo \
+    pdo_mysql \
     pdo_pgsql \
     sockets \
     intl \
