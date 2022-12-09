@@ -14,6 +14,9 @@ This is a base image using nginx + php fpm monitored by supervisord.
 Configuration : 
 
 - PHP memory_limit = -1
+- PHP post_max_size = 2G
+- PHP upload_max_filesize = 1G
+- PHP max_file_uploads = 300
 
 It must be launched using tty option.
 It uses the user 'www-data' (id 82).
