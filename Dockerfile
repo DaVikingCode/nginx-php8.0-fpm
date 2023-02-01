@@ -50,6 +50,7 @@ RUN apk add --update --no-cache \
     icu-dev \
     freetype-dev \
     postgresql-dev \
+    postgresql-client \
     zip \
     libzip-dev \
     less \
