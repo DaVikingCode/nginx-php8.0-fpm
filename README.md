@@ -17,6 +17,7 @@ This is a base image using nginx + php fpm monitored by supervisord.
   - bz2
   - pcntl
   - bcmath
+  - mbstring
   - exif
   - zip
 - PostgreSQL driver
